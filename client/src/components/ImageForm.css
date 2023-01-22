@@ -1,0 +1,48 @@
+.upload--drop {
+  align-items: center;
+  background-color: #f6f8fb;
+  border: 1px dashed #97bef4;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  height: 13.68125rem;
+  justify-content: space-evenly;
+  margin: 0 auto;
+  max-width: 100%;
+  width: 21.125rem;
+}
+
+.upload--drop:hover {
+  cursor: pointer;
+}
+
+.upload--drop__img {
+  width: 34%;
+}
+
+.upload__p {
+  color: #bdbdbd;
+  font-size: 0.78125rem;
+  margin-bottom: 17px;
+}
+
+.upload--form__file {
+  background-color: #2f80ed;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  padding: 8px 16px;
+  transition: background-color 0.13s;
+}
+
+.upload--form__file:hover {
+  background-color: #296ece;
+  cursor: pointer;
+}
+
+.error {
+  border: 1px solid red;
+  border-radius: 4px;
+  color: red;
+  padding: 15px;
+}

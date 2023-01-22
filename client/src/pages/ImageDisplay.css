@@ -1,0 +1,40 @@
+.img__check {
+  margin: 0 auto;
+  width: 2rem;
+}
+
+.img__img {
+  width: 340px;
+  max-width: 100%;
+}
+
+.link {
+  align-items: center;
+  background-color: #f6f8fb;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  padding: 2px;
+  max-width: 100%;
+}
+
+.link__button {
+  background-color: #2f80ed;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 9px;
+  padding: 9px 19px;
+  transition: background-color 0.13s;
+}
+
+.link__button:hover {
+  background-color: #296ece;
+  cursor: pointer;
+}
+
+.link__text {
+  padding-left: 7px;
+}
