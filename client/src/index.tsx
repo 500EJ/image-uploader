@@ -22,7 +22,8 @@ const router = createBrowserRouter([
       return response;
     }
   },
-  { path: "/upload", element: <Upload /> }
+  { path: "/upload", element: <Upload /> },
+  { path: "*", loader: () => redirect("/") }
 ]);
 
 const root = ReactDOM.createRoot(
