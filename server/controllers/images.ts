@@ -22,17 +22,15 @@ export async function getImage(req: Request, res: Response) {
 // POST /api/images
 export async function createImage(req: Request, res: Response) {
   if (req.file === undefined) {
-    return res.status(400).json({ error: "No file provided" });
+    return res.status(400).json({ error: "Please upload a file." });
   }
   if (req.file.mimetype !== "image/jpeg" && req.file.mimetype !== "image/png") {
     unlinkSync(req.file.path);
-    return res
-      .status(400)
-      .json({ error: "The uploaded file is not a JPEG or PNG" });
+    return res.status(400).json({ error: "Please upload a JPEG or PNG." });
   }
   if (req.file.size > 10000000) {
     unlinkSync(req.file.path);
-    return res.status(400).json({ error: "File must be under 10 megabytes" });
+    return res.status(400).json({ error: "File must be under 10 megabytes." });
   }
   try {
     const { secure_url } = await cloudinary.uploader.upload(req.file.path);

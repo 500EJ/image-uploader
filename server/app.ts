@@ -22,13 +22,6 @@ import imageRoutes from "./routes/images.js";
 
 const app = express();
 
-if (process.env["NODE_ENV"] === "production") {
-  app.use(express.static(join(__dirname, "../client/build")));
-  app.get(/^(?!\/api\/)/, (_req, res) =>
-    res.sendFile(resolve(__dirname, "../", "frontend", "build", "index.html"))
-  );
-}
-
 // middleware
 app.use((req, _res, next) => {
   console.log(req.method, req.path);
@@ -37,6 +30,13 @@ app.use((req, _res, next) => {
 
 // routes
 app.use("/api/images", imageRoutes);
+
+if (process.env["NODE_ENV"] === "production") {
+  app.use(express.static(join(__dirname, "../client/build")));
+  app.get(/^(?!\/api\/)/, (_req, res) =>
+    res.sendFile(resolve(__dirname, "../", "frontend", "build", "index.html"))
+  );
+}
 
 if (typeof process.env["MONGO_URI"] !== "string") {
   throw new Error("Missing MONGO_URI");
