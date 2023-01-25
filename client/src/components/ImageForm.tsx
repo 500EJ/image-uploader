@@ -1,33 +1,46 @@
 import "./ImageForm.css";
-import { ChangeEvent, DragEvent, FormEvent, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  DragEvent,
+  FormEvent,
+  SetStateAction,
+  useState
+} from "react";
 import mountains from "../images/mountains.svg";
 import { useNavigate } from "react-router-dom";
 
-export default function ImageForm() {
-  const [error, setError] = useState("");
+export default function ImageForm({
+  error,
+  setError
+}: {
+  error: string;
+  setError: Dispatch<SetStateAction<string>>;
+}) {
   const [image, setImage] = useState<Blob>();
   const navigate = useNavigate();
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const formData = new FormData();
     if (!image) return setError("Please upload an image file.");
     formData.append("image", image);
-    fetch("/api/images", { method: "POST", body: formData })
-      .then(response => response.json())
-      .then((json: Image | { error: string }) => {
-        if ("error" in json) {
-          navigate("/");
-          setError(json.error);
-        } else {
-          navigate(`/${json._id}`);
-          setError("");
-        }
-      })
-      .catch(async e => {
-        navigate("/");
-        setError(e instanceof Error ? e.message : "Please try again.");
-      });
     navigate("/upload");
+    try {
+      const response = await fetch("/api/images", {
+        method: "POST",
+        body: formData
+      });
+      const json: Image | { error: string } = await response.json();
+      if ("error" in json) {
+        navigate("/");
+        setError(json.error);
+      } else {
+        navigate(`/${json._id}`);
+      }
+    } catch (e) {
+      navigate("/");
+      setError(e instanceof Error ? e.message : "Please try again.");
+    }
   };
   const handleUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return setError("Please upload a file.");

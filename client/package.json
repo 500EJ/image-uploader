@@ -44,5 +44,6 @@
   "prettier": {
     "trailingComma": "none",
     "arrowParens": "avoid"
-  }
+  },
+  "proxy": "http://localhost:3001"
 }

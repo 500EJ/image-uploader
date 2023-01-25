@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { Params, redirect, useLoaderData } from "react-router-dom";
 import "./ImageDisplay.css";
 import checkmark from "../images/checkmark.svg";
 import Main from "../components/Main";
@@ -21,4 +21,14 @@ export default function ImageDisplay() {
       </p>
     </Main>
   );
+}
+
+export async function imageLoader({ params }: { params: Params<string> }) {
+  try {
+    const response = await fetch(`/api/images/${params.id}`);
+    if (!response.ok) return redirect("/");
+    return response;
+  } catch (e) {
+    redirect("/");
+  }
 }
