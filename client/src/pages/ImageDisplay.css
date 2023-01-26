@@ -36,5 +36,7 @@
 }
 
 .link__text {
+  max-width: 100%;
+  overflow: hidden;
   padding-left: 7px;
 }
