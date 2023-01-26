@@ -68,13 +68,21 @@ From your command line:
 # CLOUDINARY_KEY=
 # CLOUDINARY_SECRET=
 
-# Clone this repository
-$ git clone https://github.com/your-user-name/your-project-name
-
-# Install dependencies
+# cd into project directory
+# cd into backend
+$ cd server
+# install dependencies
 $ npm install
+# compile typescript
+$ npm run tsc
+# start server
+$ npm run dev
 
-# Run the app
+# cd into frontend
+$ cd client
+# install dependencies
+$ npm install
+# start client
 $ npm start
 ```
 
