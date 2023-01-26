@@ -1,10 +1,10 @@
-<h1 style="text-align:center">Image Uploader</h1>
+<h1 align="center">Image Uploader</h1>
 
-<div style="text-align:center">
+<div align="center">
    Solution for the Image Uploader challenge from  <a href="https://devchallenges.io" target="_blank">devchallenges.io</a>.
 </div>
 
-<div style="text-align:center">
+<div align="center">
   <h3>
     <a href="https://image-uploader.ethanjulius.tech/" target="_blank">Demo</a>
     <span> | </span>
@@ -19,7 +19,7 @@
 ## Table of Contents
 
 - [Overview](#overview)
-    - [Built With](#built-with)
+  - [Built With](#built-with)
 - [Features](#features)
 - [How to use](#how-to-use)
 - [Acknowledgements](#acknowledgements)
