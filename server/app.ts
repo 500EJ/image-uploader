@@ -33,7 +33,7 @@ app.use("/api/images", imageRoutes);
 if (process.env["NODE_ENV"] === "production") {
   app.use(express.static(join(__dirname, "../client/build")));
   app.get("/{*wild}", (_req, res) =>
-    res.sendFile(resolve(__dirname, "../", "client", "build", "index.html"))
+    res.sendFile(resolve(__dirname, "../", "client", "dist", "index.html"))
   );
 }
 
