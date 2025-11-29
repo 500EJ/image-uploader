@@ -1,4 +1,4 @@
-import { Schema, InferSchemaType, model } from "mongoose";
+import { Schema, type InferSchemaType, model } from "mongoose";
 
 const schema = new Schema({
   url: {

@@ -1,6 +1,5 @@
 import express from "express";
-import dotenv from "dotenv";
-dotenv.config();
+import 'dotenv/config'
 import mongoose from "mongoose";
 if (
   !process.env["CLOUDINARY_NAME"] ||
@@ -33,7 +32,7 @@ app.use("/api/images", imageRoutes);
 
 if (process.env["NODE_ENV"] === "production") {
   app.use(express.static(join(__dirname, "../client/build")));
-  app.get("*", (_req, res) =>
+  app.get("/{*wild}", (_req, res) =>
     res.sendFile(resolve(__dirname, "../", "client", "build", "index.html"))
   );
 }
