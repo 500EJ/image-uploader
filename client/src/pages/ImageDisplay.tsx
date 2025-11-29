@@ -1,7 +1,11 @@
-import { Params, redirect, useLoaderData } from "react-router-dom";
+import { type Params, redirect, useLoaderData } from "react-router-dom";
 import "./ImageDisplay.css";
 import checkmark from "../images/checkmark.svg";
 import Main from "../components/Main";
+interface Image {
+  url: string;
+  _id: string;
+}
 
 export default function ImageDisplay() {
   const image: Image = useLoaderData() as Image;

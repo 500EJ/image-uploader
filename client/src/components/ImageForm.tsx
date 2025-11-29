@@ -1,14 +1,18 @@
 import "./ImageForm.css";
 import {
-  ChangeEvent,
-  Dispatch,
-  DragEvent,
-  FormEvent,
-  SetStateAction,
+  type ChangeEvent,
+  type Dispatch,
+  type DragEvent,
+  type FormEvent,
+  type SetStateAction,
   useState
 } from "react";
 import mountains from "../images/mountains.svg";
 import { useNavigate } from "react-router-dom";
+interface Image {
+  url: string;
+  _id: string;
+}
 
 export default function ImageForm({
   error,
