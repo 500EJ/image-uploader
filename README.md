@@ -6,11 +6,11 @@
 
 <div align="center">
   <h3>
-    <a href="https://image-uploader.ethanjulius.tech/" target="_blank">Demo</a>
+    <a href="https://image-uploader.ethanjulius.com" target="_blank">Demo</a>
     <span> | </span>
     <a href="https://github.com/500EJ/image-uploader">Solution</a>
     <span> | </span>
-    <a href="https://devchallenges.io/challenges/O2iGT9yBd6xZBrOcVirx" target="_blank">Challenge</a>
+    <a href="https://devchallenges.io/challenge/image-upload-app" target="_blank">Challenge</a>
   </h3>
 </div>
 
