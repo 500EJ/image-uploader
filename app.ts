@@ -1,5 +1,5 @@
 import express from "express";
-import 'dotenv/config'
+import "dotenv/config";
 import mongoose from "mongoose";
 if (
   !process.env["CLOUDINARY_NAME"] ||
@@ -31,9 +31,9 @@ app.use((req, _res, next) => {
 app.use("/api/images", imageRoutes);
 
 if (process.env["NODE_ENV"] === "production") {
-  app.use(express.static(join(__dirname, "../client/dist")));
+  app.use(express.static(join(__dirname, "client/dist")));
   app.get("/{*wild}", (_req, res) =>
-    res.sendFile(resolve(__dirname, "../", "client", "dist", "index.html"))
+    res.sendFile(resolve(__dirname, "client", "dist", "index.html"))
   );
 }
 
