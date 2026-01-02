@@ -6,7 +6,7 @@
 
 <div align="center">
   <h3>
-    <a href="https://image-uploader.ethanjulius.com" target="_blank">Demo</a>
+    <a href="https://images.ethanjulius.com" target="_blank">Demo</a>
     <span> | </span>
     <a href="https://github.com/500EJ/image-uploader">Solution</a>
     <span> | </span>
