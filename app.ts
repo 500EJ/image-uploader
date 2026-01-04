@@ -18,6 +18,22 @@ import { join, resolve, dirname } from "node:path";
 import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 import imageRoutes from "./routes/images.js";
+import { rateLimit } from "express-rate-limit";
+const message = "Too many requests";
+const clientLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 20,
+  message: "Too many requests",
+  standardHeaders: true,
+  legacyHeaders: false
+});
+const imageLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 10,
+  message: "Too many requests",
+  standardHeaders: true,
+  legacyHeaders: false
+});
 
 const app = express();
 
@@ -28,11 +44,11 @@ app.use((req, _res, next) => {
 });
 
 // routes
-app.use("/api/images", imageRoutes);
+app.use("/api/images", imageLimiter, imageRoutes);
 
 if (process.env["NODE_ENV"] === "production") {
   app.use(express.static(join(__dirname, "client/dist")));
-  app.get("/{*wild}", (_req, res) =>
+  app.get("/{*wild}", clientLimiter, (_req, res) =>
     res.sendFile(resolve(__dirname, "client", "dist", "index.html"))
   );
 }
