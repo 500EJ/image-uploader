@@ -19,7 +19,6 @@ import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 import imageRoutes from "./routes/images.js";
 import { rateLimit } from "express-rate-limit";
-const message = "Too many requests";
 const clientLimiter = rateLimit({
   windowMs: 60 * 1000,
   limit: 20,
