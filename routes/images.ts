@@ -1,10 +1,10 @@
 import { Router } from "express";
 const router = Router();
-import { dirname } from "node:path";
-import { fileURLToPath } from "url";
-const __dirname = dirname(fileURLToPath(import.meta.url));
 import multer from "multer";
-const upload = multer({ dest: __dirname + "/../uploads" });
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { files: 1, fileSize: 10000000 }
+});
 import { createImage, getImage } from "../controllers/images.js";
 
 router.get("/:id", getImage);

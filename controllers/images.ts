@@ -1,7 +1,6 @@
 import type { Request, Response } from "express";
 import { v2 as cloudinary } from "cloudinary";
 import { ImageModel } from "../models/Image.js";
-import { unlinkSync } from "fs";
 
 // GET /api/images/:id
 export async function getImage(req: Request, res: Response) {
@@ -22,23 +21,39 @@ export async function getImage(req: Request, res: Response) {
 // POST /api/images
 export async function createImage(req: Request, res: Response) {
   if (req.file === undefined) {
-    return res.status(400).json({ error: "Please upload a file." });
+    return res.status(400).json({ error: "Upload a file under 10 megabytes." });
   }
   if (req.file.mimetype !== "image/jpeg" && req.file.mimetype !== "image/png") {
-    unlinkSync(req.file.path);
     return res.status(400).json({ error: "Please upload a JPEG or PNG." });
   }
   if (req.file.size > 10000000) {
-    unlinkSync(req.file.path);
     return res.status(400).json({ error: "File must be under 10 megabytes." });
   }
+
   try {
-    const { secure_url } = await cloudinary.uploader.upload(req.file.path);
-    const image = await ImageModel.create({ url: secure_url });
-    unlinkSync(req.file.path);
+    const buffer = req.file.buffer;
+    const obj = await new Promise((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream((error, result) => {
+          if (error) {
+            return reject(error);
+          }
+          return resolve(result);
+        })
+        .end(buffer);
+    });
+    if (
+      !obj ||
+      typeof obj !== "object" ||
+      !("secure_url" in obj) ||
+      typeof obj.secure_url !== "string"
+    ) {
+      return res.status(500).json({ error: "Server error" });
+    }
+
+    const image = await ImageModel.create({ url: obj.secure_url });
     return res.json(image);
   } catch (e) {
-    unlinkSync(req.file.path);
     console.error(e);
     const message = e instanceof Error ? e.message : "Server error";
     return res.status(500).json({ error: message });
