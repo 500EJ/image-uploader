@@ -13,6 +13,14 @@ export async function getImage(
     if (!image) return res.status(404).json({ error: "Image not found" });
     return res.json(image);
   } catch (err) {
+    if (
+      err &&
+      typeof err === "object" &&
+      "kind" in err &&
+      err.kind === "ObjectId"
+    ) {
+      return res.status(400).json({ error: "Image not found" });
+    }
     return next(err);
   }
 }
@@ -67,6 +75,15 @@ export async function createImage(
     const image = await ImageModel.create({ url: obj.secure_url });
     return res.json(image);
   } catch (err) {
+    if (
+      err &&
+      typeof err === "object" &&
+      "name" in err &&
+      err.name === "MulterError" &&
+      "message" in err
+    ) {
+      return res.status(400).json({ error: err.message });
+    }
     return next(err);
   }
 }

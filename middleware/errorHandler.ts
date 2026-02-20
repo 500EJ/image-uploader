@@ -27,14 +27,6 @@ export default function errorHandler(
     if ("message" in err && typeof err.message === "string" && err.message) {
       message = err.message;
     }
-    if ("name" in err) {
-      if (err.name === "MulterError") {
-        statusCode = 400;
-      } else if (err.name === "CastError") {
-        statusCode = 404;
-        message = "Image not found";
-      }
-    }
   }
   return res.status(statusCode).json({ error: message });
 }
