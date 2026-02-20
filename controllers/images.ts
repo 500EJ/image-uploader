@@ -18,7 +18,11 @@ export async function getImage(
 }
 
 // POST /api/images
-export async function createImage(req: Request, res: Response) {
+export async function createImage(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   if (req.file === undefined) {
     return res.status(400).json({ error: "Upload a file under 10 megabytes." });
   }
@@ -62,9 +66,7 @@ export async function createImage(req: Request, res: Response) {
 
     const image = await ImageModel.create({ url: obj.secure_url });
     return res.json(image);
-  } catch (e) {
-    console.error(e);
-    const message = e instanceof Error ? e.message : "Server error";
-    return res.status(500).json({ error: message });
+  } catch (err) {
+    return next(err);
   }
 }
