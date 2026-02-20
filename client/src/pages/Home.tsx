@@ -13,7 +13,9 @@ export default function Home() {
   ) : (
     <Main>
       <h1 className="main__title">Upload Image</h1>
-      <h2 className="main__subtitle">Accepted Formats: JPEG & PNG</h2>
+      <h2 className="main__subtitle">
+        Accepted Formats: JPEG, PNG, HEIC, HEIF, TIFF, and WEBP
+      </h2>
       <ImageForm error={error} setError={setError} />
     </Main>
   );

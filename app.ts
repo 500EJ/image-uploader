@@ -18,6 +18,8 @@ import { join, resolve, dirname } from "node:path";
 import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 import imageRoutes from "./routes/images.js";
+import logger from "./middleware/logger.ts";
+import errorHandler from "./middleware/errorHandler.js";
 import { rateLimit } from "express-rate-limit";
 const clientLimiter = rateLimit({
   windowMs: 60 * 1000,
@@ -37,10 +39,7 @@ const imageLimiter = rateLimit({
 const app = express();
 
 // middleware
-app.use((req, _res, next) => {
-  console.log(req.method, req.path);
-  next();
-});
+app.use(logger);
 
 // routes
 app.use("/api/images", imageLimiter, imageRoutes);
@@ -51,6 +50,9 @@ if (process.env["NODE_ENV"] === "production") {
     res.sendFile(resolve(__dirname, "client", "dist", "index.html"))
   );
 }
+
+// errors
+app.use(errorHandler);
 
 if (typeof process.env["MONGO_URI"] !== "string") {
   throw new Error("Missing MONGO_URI");

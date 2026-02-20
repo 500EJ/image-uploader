@@ -1,20 +1,19 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { v2 as cloudinary } from "cloudinary";
 import { ImageModel } from "../models/Image.js";
 
 // GET /api/images/:id
-export async function getImage(req: Request, res: Response) {
+export async function getImage(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
     const image = await ImageModel.findById(req.params["id"]);
     if (!image) return res.status(404).json({ error: "Image not found" });
     return res.json(image);
-  } catch (e) {
-    if (e instanceof Error && e.name === "CastError") {
-      return res.status(404).json({ error: "Image not found" });
-    }
-    console.error(e);
-    const message = e instanceof Error ? e.message : "Server error";
-    return res.status(500).json({ error: message });
+  } catch (err) {
+    return next(err);
   }
 }
 
@@ -23,8 +22,18 @@ export async function createImage(req: Request, res: Response) {
   if (req.file === undefined) {
     return res.status(400).json({ error: "Upload a file under 10 megabytes." });
   }
-  if (req.file.mimetype !== "image/jpeg" && req.file.mimetype !== "image/png") {
-    return res.status(400).json({ error: "Please upload a JPEG or PNG." });
+  const mimetypes = [
+    "image/jpeg",
+    "image/png",
+    "image/heic",
+    "image/heif",
+    "image/tiff",
+    "image/webp"
+  ];
+  if (!mimetypes.includes(req.file.mimetype)) {
+    return res.status(400).json({
+      error: "Accepted Formats: JPEG, PNG, HEIC, HEIF, TIFF, and WEBP"
+    });
   }
   if (req.file.size > 10000000) {
     return res.status(400).json({ error: "File must be under 10 megabytes." });

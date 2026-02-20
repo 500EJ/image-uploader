@@ -90,7 +90,7 @@ export default function ImageForm({
         <input
           type="file"
           name="image"
-          accept="image/png, image/jpeg"
+          accept="image/png, image/jpeg, image/heic, image/heif, image/tiff, image/webp"
           onChange={handleUpload}
           style={{ display: "none" }}
         />
